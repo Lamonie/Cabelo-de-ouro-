@@ -9,56 +9,70 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
         
-        body { background-color: #0b0e14; color: white; font-family: 'Inter', sans-serif; overflow-x: hidden; }
-        .hidden { display: none; }
+        body { background-color: #0b0e14; color: white; font-family: 'Inter', sans-serif; overflow-x: hidden; -webkit-tap-highlight-color: transparent; }
         
-        /* LOGO ESTILO PREMIUM */
+        /* HEADER FIXO ESTILO PREMIUM */
         .logo-text { font-size: 32px; font-weight: 900; letter-spacing: -1px; text-shadow: 0 0 20px rgba(59, 130, 246, 0.6); }
         .logo-sub { letter-spacing: 6px; font-size: 10px; color: #3b82f6; font-weight: bold; border-top: 1px solid #3b82f6; }
 
-        /* CARROSSEL CUSTOM */
-        .carousel-container { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; gap: 15px; padding: 10px 20px; scrollbar-width: none; }
+        /* CARROSSÉIS */
+        .carousel-container { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; gap: 15px; padding: 10px 20px 25px 20px; scrollbar-width: none; }
         .carousel-container::-webkit-scrollbar { display: none; }
         
+        /* CARD DE PRODUTO */
         .product-card { 
-            min-width: 160px; max-width: 160px; background: #1a1f29; border-radius: 18px; 
-            border: 2px solid transparent; transition: 0.3s; scroll-snap-align: start; position: relative;
+            min-width: 170px; max-width: 170px; background: #1a1f29; border-radius: 20px; 
+            border: 2px solid transparent; transition: all 0.2s ease-in-out; scroll-snap-align: start;
         }
-        /* MARCAÇÃO DE TOQUE */
-        .product-card.selected { border-color: #3b82f6; box-shadow: 0 0 15px rgba(59, 130, 246, 0.4); transform: scale(1.02); }
+        
+        /* MARCAÇÃO QUANDO TOCADO */
+        .product-card:active, .product-card.selected { 
+            border-color: #3b82f6; 
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
+            transform: scale(0.98);
+        }
 
-        .img-box { width: 100%; height: 140px; background: white; border-radius: 14px; overflow: hidden; display: flex; align-items: center; justify-content: center; padding: 10px; }
-        .img-box img { max-width: 100%; max-height: 100%; object-fit: contain; }
+        .img-box { 
+            width: 100%; height: 150px; background: #fff; border-radius: 16px; 
+            overflow: hidden; display: flex; align-items: center; justify-content: center;
+        }
+        .img-box img { width: 100%; height: 100%; object-fit: cover; }
 
-        /* CARRINHO */
-        .cart-btn { position: fixed; bottom: 25px; right: 20px; background: #3b82f6; width: 65px; height: 65px; border-radius: 20px; display: flex; align-items: center; justify-content: center; z-index: 100; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        /* CARRINHO FLUTUANTE */
+        .cart-btn { 
+            position: fixed; bottom: 25px; right: 20px; background: #3b82f6; 
+            width: 65px; height: 65px; border-radius: 22px; display: flex; 
+            align-items: center; justify-content: center; z-index: 100; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.6); 
+        }
 
-        .section-title { padding-left: 20px; font-size: 14px; font-weight: bold; color: #64748b; text-transform: uppercase; margin-top: 20px; }
+        .section-title { padding: 0 20px; font-size: 14px; font-weight: 800; color: #94a3b8; text-transform: uppercase; margin-top: 25px; display: flex; align-items: center; gap: 8px; }
+        .hidden { display: none; }
     </style>
 </head>
 <body>
 
     <div id="app" class="max-w-md mx-auto min-h-screen pb-32">
         
-        <header class="text-center py-10">
+        <header class="text-center py-8">
             <h1 class="logo-text">VASCONCELOS</h1>
             <span class="logo-sub">PET SHOP</span>
         </header>
 
-        <!-- TELA LOGIN/CADASTRO -->
+        <!-- TELA DE ACESSO -->
         <section id="auth-screen" class="p-8">
             <div class="space-y-4">
-                <input type="email" placeholder="E-mail" class="w-full bg-gray-900 border border-gray-800 p-4 rounded-xl outline-none focus:border-blue-500">
-                <input type="password" placeholder="Senha" class="w-full bg-gray-900 border border-gray-800 p-4 rounded-xl outline-none focus:border-blue-500">
-                <button onclick="navigate('store')" class="w-full bg-blue-600 p-4 rounded-xl font-black text-lg">ENTRAR</button>
-                <div class="flex justify-between text-xs text-gray-500 font-bold px-2">
-                    <span>CRIAR CONTA</span>
-                    <span>ESQUECI A SENHA</span>
+                <input type="email" placeholder="E-mail" class="w-full bg-[#1a1f29] border border-gray-800 p-4 rounded-xl outline-none focus:border-blue-500 transition-all">
+                <input type="password" placeholder="Senha" class="w-full bg-[#1a1f29] border border-gray-800 p-4 rounded-xl outline-none focus:border-blue-500 transition-all">
+                <button onclick="navigate('store')" class="w-full bg-blue-600 p-4 rounded-xl font-black text-lg shadow-lg shadow-blue-900/40">ACESSAR LOJA</button>
+                <div class="flex justify-between text-[10px] text-gray-500 font-bold px-2">
+                    <span>CRIAR NOVA CONTA</span>
+                    <span>RECUPERAR SENHA</span>
                 </div>
             </div>
         </section>
 
-        <!-- TELA DA LOJA (COM 3 CARROSSÉIS) -->
+        <!-- TELA DA LOJA (3 CARROSSÉIS) -->
         <section id="store-screen" class="hidden">
             
             <h2 class="section-title">🔥 Destaques da Semana</h2>
@@ -74,94 +88,104 @@
 
         <!-- TELA DE DETALHES -->
         <section id="details-screen" class="hidden p-6">
-            <button onclick="goBack()" class="bg-gray-800 px-4 py-2 rounded-lg text-xs font-bold mb-6">← VOLTAR (HISTÓRICO)</button>
+            <button onclick="goBack()" class="bg-[#1a1f29] border border-gray-800 px-5 py-2 rounded-xl text-[10px] font-bold mb-6 flex items-center gap-2">
+                <i class="fas fa-arrow-left"></i> VOLTAR AO CATÁLOGO
+            </button>
             <div id="product-detail"></div>
         </section>
 
     </div>
 
     <!-- BOTÃO CARRINHO -->
-    <div id="main-cart" class="cart-btn hidden" onclick="alert('Indo para o pagamento...')">
+    <div id="main-cart" class="cart-btn hidden" onclick="alert('Indo para o carrinho...')">
         <i class="fas fa-shopping-basket text-2xl"></i>
-        <span id="count" class="absolute -top-2 -right-2 bg-red-600 text-[10px] w-6 h-6 rounded-full flex items-center justify-center font-bold">0</span>
+        <span id="count" class="absolute -top-2 -right-2 bg-red-600 text-[10px] w-6 h-6 rounded-full flex items-center justify-center font-bold border-2 border-[#0b0e14]">0</span>
     </div>
 
     <script>
-        const history = ['auth'];
-        let cartCount = 0;
+        const historyStack = ['auth'];
+        let cartTotal = 0;
 
-        // BANCO DE DADOS MASSIVO (SIMULADO)
+        // BANCO DE DADOS - IMAGENS DE BANCO (UNSPLASH)
+        // Usamos IDs estáveis para garantir que não quebrem
         const products = [
             // DESTAQUES
-            { id: 1, row: 'highlights', tag: 'DOG', brand: 'Royal Canin', name: 'Medium Adult', price: '215,90', img: 'https://images.tcdn.com.br/img/img_prod/697931/racao_royal_canin_medium_adult_para_caes_adultos_de_porte_medio_1127_1_20201111161747.jpg', desc: 'Ração super premium para cães de porte médio.' },
-            { id: 2, row: 'highlights', tag: 'CAT', brand: 'Royal Canin', name: 'Kitten Gatos', price: '184,00', img: 'https://images.tcdn.com.br/img/img_prod/697931/racao_royal_canin_kitten_para_gatos_filhotes_de_4_a_12_meses_de_idade_1045_1_20201111161730.jpg', desc: 'Saúde digestiva para filhotes.' },
-            
+            { id: 1, row: 'highlights', brand: 'Royal Canin', name: 'Premium Adult', price: '215,90', img: 'https://images.unsplash.com/photo-1589924691106-382a3928e83f?auto=format&fit=crop&w=400', desc: 'Nutrição completa para cães adultos com alta digestibilidade.' },
+            { id: 2, row: 'highlights', brand: 'Royal Canin', name: 'Kitten Felino', price: '184,00', img: 'https://images.unsplash.com/photo-1591769225440-811ad7d6eca3?auto=format&fit=crop&w=400', desc: 'Suporte ao sistema imunológico para gatinhos em crescimento.' },
+            { id: 3, row: 'highlights', brand: 'Biofresh', name: 'Mix Natural', price: '249,00', img: 'https://images.unsplash.com/photo-1568640347023-a616a30bc3bd?auto=format&fit=crop&w=400', desc: 'Ração grain-free com frutas e vegetais frescos.' },
+
             // CÃES
-            { id: 3, row: 'dogs', tag: 'DOG', brand: 'Premier', name: 'Raças Específicas', price: '169,00', img: 'https://images.tcdn.com.br/img/img_prod/697931/racao_premier_pet_racas_especificas_shih_tzu_caes_adultos_477_1_20201111161642.jpg', desc: 'Nutrição para o seu pet de raça.' },
-            { id: 4, row: 'dogs', tag: 'DOG', brand: 'Golden', name: 'Special Cães', price: '125,90', img: 'https://images.tcdn.com.br/img/img_prod/697931/racao_golden_special_para_caes_adultos_sabor_frango_e_carne_437_1_20201111161634.jpg', desc: 'Melhor custo benefício premium.' },
-            { id: 5, row: 'dogs', tag: 'DOG', brand: 'Pedigree', name: 'Sachê Carne', price: '3,80', img: 'https://static.petz.com.br/fotos/1658428285901.jpg', desc: 'Refeição úmida completa.' },
-            { id: 6, row: 'dogs', tag: 'DOG', brand: 'Biofresh', name: 'Castrados', price: '240,00', img: 'https://images.tcdn.com.br/img/img_prod/697931/racao_biofresh_para_caes_adultos_de_racas_pequenas_e_minis_957_1_20201111161718.jpg', desc: 'Livre de grãos, 100% natural.' },
-            
+            { id: 4, row: 'dogs', brand: 'Premier', name: 'Raças Específicas', price: '169,00', img: 'https://images.unsplash.com/photo-1583337130417-3346a1be7dee?auto=format&fit=crop&w=400', desc: 'Desenvolvida especificamente para as necessidades da raça.' },
+            { id: 5, row: 'dogs', brand: 'Golden', name: 'Special Frango', price: '125,90', img: 'https://images.unsplash.com/photo-1621245645607-b08064972e2e?auto=format&fit=crop&w=400', desc: 'Proteína de alta qualidade para cães ativos.' },
+            { id: 6, row: 'dogs', brand: 'Pedigree', name: 'Sachê Carne', price: '3,80', img: 'https://plus.unsplash.com/premium_photo-1663954644078-f71694295328?auto=format&fit=crop&w=400', desc: 'Pedaços cozidos ao vapor em molho suculento.' },
+            { id: 7, row: 'dogs', brand: 'Magnus', name: 'Todo Dia', price: '89,90', img: 'https://images.unsplash.com/photo-1563460716884-18a517cd9f61?auto=format&fit=crop&w=400', desc: 'Sabor que seu pet adora com o preço que você precisa.' },
+            { id: 8, row: 'dogs', brand: 'N&D', name: 'Ancestral Selection', price: '298,00', img: 'https://images.unsplash.com/photo-1601758228041-f3b2795255f1?auto=format&fit=crop&w=400', desc: 'Baixo índice glicêmico e conservantes naturais.' },
+
             // GATOS
-            { id: 7, row: 'cats', tag: 'CAT', brand: 'Whiskas', name: 'Sachê Peixe', price: '4,20', img: 'https://static.petz.com.br/fotos/1660742130325.jpg', desc: 'O favorito dos felinos.' },
-            { id: 8, row: 'cats', tag: 'CAT', brand: 'Special Cat', name: 'Mix Sabores', price: '98,00', img: 'https://images.tcdn.com.br/img/img_prod/697931/racao_special_cat_premium_carne_para_gatos_adultos_1013_1_20201111161726.jpg', desc: 'Proteína de alta qualidade.' },
-            { id: 9, row: 'cats', tag: 'CAT', brand: 'Cat Chow', name: 'Defesa Plus', price: '115,00', img: 'https://static.petz.com.br/fotos/1625854897457.jpg', desc: 'Proteção para gatos de casa.' },
-            { id: 10, row: 'cats', tag: 'CAT', brand: 'N&D', name: 'Grain Free', price: '210,00', img: 'https://images.tcdn.com.br/img/img_prod/697931/racao_n_d_prime_frango_e_granada_para_gatos_adultos_castrados_1019_1_20201111161727.jpg', desc: 'A melhor nutrição do mundo.' }
+            { id: 9, row: 'cats', brand: 'Whiskas', name: 'Sachê Peixe', price: '4,20', img: 'https://images.unsplash.com/photo-1548546738-8509cb246ed3?auto=format&fit=crop&w=400', desc: 'Refeição completa e balanceada para gatos adultos.' },
+            { id: 10, row: 'cats', brand: 'Special Cat', name: 'Prime Adulto', price: '112,00', img: 'https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?auto=format&fit=crop&w=400', desc: 'Controle do pH urinário e redução de odores.' },
+            { id: 11, row: 'cats', brand: 'Guabi Natural', name: 'Gatos Castrados', price: '156,00', img: 'https://images.unsplash.com/photo-1574158622682-e40e69881006?auto=format&fit=crop&w=400', desc: 'Sem transgênicos e sem corantes artificiais.' },
+            { id: 12, row: 'cats', brand: 'Friskies', name: 'Mix de Mares', price: '14,50', img: 'https://images.unsplash.com/photo-1533738363-b7f9aef128ce?auto=format&fit=crop&w=400', desc: 'Croquetes crocantes com sabor de salmão e atum.' },
+            { id: 13, row: 'cats', brand: 'Sheba', name: 'Sachê Atum', price: '5,90', img: 'https://images.unsplash.com/photo-1592194996308-7b43878e84a6?auto=format&fit=crop&w=400', desc: 'A experiência gourmet definitiva para felinos.' }
         ];
 
         function renderStore() {
-            const containers = {
-                highlights: document.getElementById('carousel-highlights'),
-                dogs: document.getElementById('carousel-dogs'),
-                cats: document.getElementById('carousel-cats')
-            };
+            const rowIds = { highlights: 'carousel-highlights', dogs: 'carousel-dogs', cats: 'carousel-cats' };
+            
+            // Limpa antes de renderizar
+            Object.values(rowIds).forEach(id => document.getElementById(id).innerHTML = '');
 
             products.forEach(p => {
                 const card = document.createElement('div');
                 card.className = 'product-card p-3';
-                card.id = `prod-${p.id}`;
+                card.id = `card-${p.id}`;
                 card.innerHTML = `
-                    <div class="img-box" onclick="selectProduct(${p.id})">
-                        <img src="${p.img}" onerror="this.src='https://via.placeholder.com/150?text=Pet+Food'">
+                    <div class="img-box" onclick="handleSelect(${p.id})">
+                        <img src="${p.img}" loading="lazy" alt="${p.name}">
                     </div>
                     <div class="mt-3">
-                        <p class="text-[10px] text-blue-500 font-bold uppercase">${p.brand}</p>
-                        <h3 class="text-xs font-bold truncate text-gray-200">${p.name}</h3>
-                        <p class="text-blue-400 font-black mt-1">R$ ${p.price}</p>
-                        <button onclick="addToCart(${p.id})" class="w-full bg-blue-600/20 text-blue-400 text-[10px] py-2 mt-2 rounded-lg font-bold">+ CARRINHO</button>
+                        <p class="text-[9px] text-blue-500 font-black uppercase mb-1">${p.brand}</p>
+                        <h3 class="text-[11px] font-bold truncate text-gray-200">${p.name}</h3>
+                        <p class="text-blue-400 font-black mt-1 text-sm">R$ ${p.price}</p>
+                        <button onclick="addCart(event, ${p.id})" class="w-full bg-[#2563eb1a] text-blue-400 text-[9px] py-2.5 mt-2 rounded-xl font-black border border-blue-600/20 active:bg-blue-600 active:text-white transition-all">+ CARRINHO</button>
                     </div>
                 `;
-                containers[p.row].appendChild(card);
+                document.getElementById(rowIds[p.row]).appendChild(card);
             });
         }
 
-        function selectProduct(id) {
-            // Remove marcação de todos
+        function handleSelect(id) {
+            // Remove seleção visual de todos
             document.querySelectorAll('.product-card').forEach(c => c.classList.remove('selected'));
             // Adiciona no clicado
-            document.getElementById(`prod-${id}`).classList.add('selected');
+            const card = document.getElementById(`card-${id}`);
+            card.classList.add('selected');
             
-            // Abre detalhes após meio segundo
-            setTimeout(() => {
-                showDetails(id);
-            }, 300);
+            // Navega para detalhes após pequeno delay para o usuário ver o efeito
+            setTimeout(() => showDetails(id), 150)
         }
 
         function showDetails(id) {
-            const p = products.find(x => x.id === id);
-            const detailView = document.getElementById('product-detail');
-            detailView.innerHTML = `
-                <div class="bg-white rounded-3xl p-6 mb-6">
-                    <img src="${p.img}" class="w-full h-48 object-contain">
+            const p = products.find(item => item.id === id);
+            const content = document.getElementById('product-detail');
+            content.innerHTML = `
+                <div class="bg-white rounded-[32px] p-6 mb-6 shadow-2xl">
+                    <img src="${p.img}" class="w-full h-56 object-contain">
                 </div>
-                <p class="text-blue-500 font-bold">${p.brand}</p>
-                <h1 class="text-2xl font-black mb-2">${p.name}</h1>
-                <p class="text-3xl font-black text-blue-400 mb-6">R$ ${p.price}</p>
-                <div class="bg-gray-900 p-4 rounded-2xl border border-gray-800">
-                    <h4 class="text-xs text-gray-500 font-bold mb-2">DESCRIÇÃO COMPLETA</h4>
-                    <p class="text-sm text-gray-400 leading-relaxed">${p.desc}</p>
+                <div class="px-2">
+                    <p class="text-blue-500 font-black text-xs uppercase tracking-widest mb-1">${p.brand}</p>
+                    <h1 class="text-3xl font-black mb-2">${p.name}</h1>
+                    <p class="text-4xl font-black text-blue-400 mb-8">R$ ${p.price}</p>
+                    
+                    <div class="bg-[#1a1f29] p-5 rounded-2xl border border-gray-800 mb-8">
+                        <h4 class="text-[10px] text-gray-500 font-black mb-3 tracking-tighter">INFORMAÇÕES DO PRODUTO</h4>
+                        <p class="text-sm text-gray-400 leading-relaxed">${p.desc}</p>
+                    </div>
+
+                    <button onclick="addCart(event, ${p.id})" class="w-full bg-blue-600 py-5 rounded-2xl font-black text-lg shadow-xl shadow-blue-900/40 active:scale-95 transition-transform">
+                        ADICIONAR AO CARRINHO
+                    </button>
                 </div>
-                <button onclick="addToCart(${p.id})" class="w-full bg-blue-600 p-5 rounded-2xl font-black mt-8 shadow-lg shadow-blue-900/20">ADICIONAR AO CARRINHO</button>
             `;
             navigate('details');
         }
@@ -169,31 +193,39 @@
         function navigate(screen) {
             document.querySelectorAll('section').forEach(s => s.classList.add('hidden'));
             document.getElementById(screen + '-screen').classList.remove('hidden');
-            if(history[history.length-1] !== screen) history.push(screen);
+            
+            if(historyStack[historyStack.length - 1] !== screen) {
+                historyStack.push(screen);
+            }
             
             document.getElementById('main-cart').classList.toggle('hidden', screen === 'auth');
             window.scrollTo(0,0);
         }
 
         function goBack() {
-            if(history.length > 1) {
-                history.pop();
-                const prev = history[history.length-1];
-                navigate(prev);
-                history.pop(); // Evita duplicar no histórico ao voltar
+            if(historyStack.length > 1) {
+                historyStack.pop();
+                const target = historyStack[historyStack.length - 1];
+                
+                // Força o estado visual correto
+                document.querySelectorAll('section').forEach(s => s.classList.add('hidden'));
+                document.getElementById(target + '-screen').classList.remove('hidden');
             }
         }
 
-        function addToCart(id) {
-            cartCount++;
-            document.getElementById('count').innerText = cartCount;
-            // Feedback visual no botão
-            const btn = document.getElementById('main-cart');
-            btn.classList.add('scale-110');
-            setTimeout(() => btn.classList.remove('scale-110'), 200);
+        function addCart(e, id) {
+            e.stopPropagation();
+            cartTotal++;
+            const counter = document.getElementById('count');
+            counter.innerText = cartTotal;
+            
+            // Efeito de pulso no carrinho
+            const cartIcon = document.getElementById('main-cart');
+            cartIcon.style.transform = 'scale(1.2)';
+            setTimeout(() => cartIcon.style.transform = 'scale(1)', 200);
         }
 
-        // Inicializar
+        // Inicia a loja
         renderStore();
     </script>
 </body>
