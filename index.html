@@ -1,1 +1,115 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Moisés Barbearia</title>
 
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+<style>
+body{background:#0f1115;color:#fff;font-family:sans-serif}
+.hidden{display:none}
+</style>
+</head>
+
+<body>
+
+<div id="app" class="max-w-md mx-auto min-h-screen p-5">
+
+<h1 class="text-center text-2xl font-bold mb-4">MOISÉS BARBEARIA</h1>
+
+<!-- SUA TELA ORIGINAL -->
+<div id="schedule-screen">
+
+<button onclick="confirmAppointment()" class="w-full bg-yellow-600 p-4 rounded-xl font-bold">
+FINALIZAR AGENDAMENTO
+</button>
+
+</div>
+
+<!-- TELA PIX (NOVA) -->
+<div id="payment-screen" class="hidden text-center">
+
+<h2 class="text-xl font-bold">Pagamento via PIX</h2>
+
+<div id="qrcode" style="margin:20px auto"></div>
+
+<div id="pix-code" style="background:#000;padding:10px;border-radius:10px;font-size:12px;word-break:break-all;margin-top:10px"></div>
+
+<button onclick="copyPix()" class="bg-yellow-600 mt-4 p-4 w-full rounded-xl font-bold">
+COPIAR PIX
+</button>
+
+<button onclick="finishPayment()" class="bg-green-600 mt-3 p-4 w-full rounded-xl font-bold">
+JÁ PAGUEI
+</button>
+
+</div>
+
+</div>
+
+<script>
+
+// ===== SUA LÓGICA ORIGINAL SIMULADA =====
+let selectedService = "Corte"
+let selectedDate = "10/04"
+let selectedTime = "14:00"
+
+function confirmAppointmentOriginal(){
+alert(`✅ Agendado!
+Serviço: ${selectedService}
+Data: ${selectedDate}
+Hora: ${selectedTime}`);
+location.reload();
+}
+
+// ===== NOVO SISTEMA SEM QUEBRAR =====
+function confirmAppointment(){
+
+document.getElementById("schedule-screen").classList.add("hidden");
+document.getElementById("payment-screen").classList.remove("hidden");
+
+gerarPix();
+
+}
+
+function gerarPix(){
+
+const pix = "00020126580014BR.GOV.BCB.PIX0136seu@email.com520400005303986540510.005802BR5920MOISES BARBEARIA6009SAO PAULO62070503***6304ABCD";
+
+document.getElementById("pix-code").innerText = pix;
+
+document.getElementById("qrcode").innerHTML = "";
+
+new QRCode(document.getElementById("qrcode"), {
+text: pix,
+width:200,
+height:200
+});
+
+}
+
+function copyPix(){
+navigator.clipboard.writeText(document.getElementById("pix-code").innerText);
+alert("PIX copiado!");
+}
+
+function finishPayment(){
+
+alert(`✅ PAGAMENTO CONFIRMADO!
+
+Serviço: ${selectedService}
+Data: ${selectedDate}
+Hora: ${selectedTime}`);
+
+// chama original
+confirmAppointmentOriginal();
+
+}
+
+</script>
+
+</body>
+</html>
