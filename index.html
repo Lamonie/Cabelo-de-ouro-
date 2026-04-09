@@ -1,205 +1,198 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>VASCONCELOS PET SHOP</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
-        
-        body { background-color: #0b0e14; color: white; font-family: 'Inter', sans-serif; overflow-x: hidden; -webkit-tap-highlight-color: transparent; }
-        
-        .logo-text { font-size: 32px; font-weight: 900; letter-spacing: -1px; text-shadow: 0 0 20px rgba(59, 130, 246, 0.6); }
-        .logo-sub { letter-spacing: 6px; font-size: 10px; color: #3b82f6; font-weight: bold; border-top: 1px solid #3b82f6; }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VASCONCELOS PET SHOP</title>
 
-        /* CARROSSÉIS TURBINADOS */
-        .carousel-container { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; gap: 12px; padding: 10px 20px 30px; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
-        .carousel-container::-webkit-scrollbar { display: none; }
-        
-        .product-card { 
-            min-width: 165px; max-width: 165px; background: #161b22; border-radius: 20px; 
-            border: 2px solid transparent; transition: 0.2s; scroll-snap-align: start;
-        }
-        
-        /* EFEITO DE TOQUE (AZUL) */
-        .product-card:active { 
-            border-color: #3b82f6; 
-            box-shadow: 0 0 25px rgba(59, 130, 246, 0.6);
-            transform: scale(0.96);
-        }
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
-        .img-box { 
-            width: 100%; height: 160px; background: #fff; border-radius: 16px; 
-            overflow: hidden; display: flex; align-items: center; justify-content: center; padding: 8px;
-        }
-        .img-box img { max-width: 100%; max-height: 100%; object-fit: contain; }
+<style>
+body {
+background:#0b0e14;
+color:#fff;
+font-family:Arial;
+}
 
-        .cart-float { 
-            position: fixed; bottom: 25px; right: 20px; background: #3b82f6; 
-            width: 65px; height: 65px; border-radius: 22px; display: flex; 
-            align-items: center; justify-content: center; z-index: 100; 
-            box-shadow: 0 10px 30px rgba(0,0,0,0.6); border: 2px solid rgba(255,255,255,0.1);
-        }
+.logo {
+text-align:center;
+padding:20px;
+font-size:28px;
+font-weight:bold;
+color:#3b82f6;
+}
 
-        .section-header { padding: 0 20px; margin-top: 25px; display: flex; justify-content: space-between; align-items: center; }
-        .section-title { font-size: 15px; font-weight: 800; color: #f8fafc; text-transform: uppercase; }
-        
-        .hidden { display: none; }
-    </style>
+.carousel {
+display:flex;
+overflow-x:auto;
+gap:12px;
+padding:10px;
+}
+
+.card {
+min-width:160px;
+background:#161b22;
+border-radius:15px;
+padding:10px;
+}
+
+.img-box {
+background:#fff;
+height:140px;
+border-radius:10px;
+display:flex;
+align-items:center;
+justify-content:center;
+overflow:hidden;
+}
+
+.img-box img {
+max-width:100%;
+max-height:100%;
+}
+
+.btn {
+background:#3b82f6;
+padding:10px;
+border-radius:10px;
+text-align:center;
+margin-top:10px;
+font-size:12px;
+cursor:pointer;
+}
+
+#cart {
+position:fixed;
+bottom:20px;
+right:20px;
+background:#3b82f6;
+width:60px;
+height:60px;
+border-radius:15px;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:22px;
+}
+
+#count {
+position:absolute;
+top:-5px;
+right:-5px;
+background:red;
+border-radius:50%;
+width:20px;
+height:20px;
+font-size:10px;
+display:flex;
+align-items:center;
+justify-content:center;
+}
+</style>
 </head>
+
 <body>
 
-    <div id="app" class="max-w-md mx-auto min-h-screen pb-32">
-        
-        <header class="text-center py-8">
-            <h1 class="logo-text">VASCONCELOS</h1>
-            <span class="logo-sub">PET SHOP</span>
-        </header>
+<div class="logo">VASCONCELOS PET SHOP</div>
 
-        <!-- LOJA -->
-        <section id="store-screen">
-            <div class="section-header">
-                <h2 class="section-title">🔥 Destaques (Whiskas)</h2>
-                <span class="text-xs text-blue-500 font-bold">Ver todos</span>
-            </div>
-            <div class="carousel-container" id="carousel-1"></div>
+<div class="carousel" id="produtos"></div>
 
-            <div class="section-header">
-                <h2 class="section-title">🐕 Cães (200+ Itens)</h2>
-            </div>
-            <div class="carousel-container" id="carousel-2"></div>
+<div id="cart" onclick="alert('Pedido finalizado!')">
+🛒
+<div id="count">0</div>
+</div>
 
-            <div class="section-header">
-                <h2 class="section-title">🐈 Gatos & Sachês</h2>
-            </div>
-            <div class="carousel-container" id="carousel-3"></div>
-        </section>
+<script>
 
-        <!-- DETALHES -->
-        <section id="details-screen" class="hidden p-6">
-            <button onclick="goBack()" class="bg-[#161b22] px-5 py-2 rounded-xl text-[10px] font-bold mb-6 flex items-center gap-2 border border-gray-800">
-                <i class="fas fa-arrow-left text-blue-500"></i> VOLTAR
-            </button>
-            <div id="product-detail"></div>
-        </section>
+let cart = 0;
 
-    </div>
+// 🔥 PRODUTOS REAIS (IMAGENS FUNCIONANDO)
+const produtos = [
+{
+nome:"Royal Canin Adulto",
+preco:"189,90",
+img:"https://cdn.awsli.com.br/600x450/1108/1108789/produto/43598969/7e45a5c64b.jpg"
+},
+{
+nome:"Golden Frango",
+preco:"129,90",
+img:"https://cdn.awsli.com.br/600x450/1108/1108789/produto/43601662/0b7d5dcb7c.jpg"
+},
+{
+nome:"Premier Raças",
+preco:"154,00",
+img:"https://cdn.awsli.com.br/600x450/1108/1108789/produto/43599045/9c44e3f1c0.jpg"
+},
+{
+nome:"Whiskas Sachê",
+preco:"3,80",
+img:"https://cdn.awsli.com.br/600x450/1108/1108789/produto/43602018/1b2eafbb28.jpg"
+},
+{
+nome:"Pedigree Adulto",
+preco:"99,90",
+img:"https://cdn.awsli.com.br/600x450/1108/1108789/produto/43602202/6f49b43f3c.jpg"
+},
+{
+nome:"N&D Prime",
+preco:"210,00",
+img:"https://cdn.awsli.com.br/600x450/1108/1108789/produto/43602389/aa2c8e9c3d.jpg"
+}
+];
 
-    <!-- CARRINHO -->
-    <div id="main-cart" class="cart-float" onclick="alert('Finalizando pedido...')">
-        <i class="fas fa-shopping-basket text-2xl text-white"></i>
-        <span id="cart-count" class="absolute -top-2 -right-2 bg-red-600 text-[10px] w-6 h-6 rounded-full flex items-center justify-center font-bold border-2 border-[#0b0e14]">0</span>
-    </div>
+// 🔥 RENDER
+function carregar(){
+const container = document.getElementById("produtos");
 
-    <script>
-        let cart = 0;
-        const history = ['store'];
+produtos.forEach((p,i)=>{
+container.innerHTML += `
+<div class="card" onclick="detalhe(${i})">
+<div class="img-box">
+<img src="${p.img}">
+</div>
 
-        // BANCO DE DADOS DE IMAGENS REAIS (LINKS PÚBLICOS ESTÁVEIS)
-        const sampleImages = [
-            "https://m.media-amazon.com/images/I/71R2H0O-t6L._AC_SL1500_.jpg", // Whiskas Carne
-            "https://m.media-amazon.com/images/I/71z1GgUu6KL._AC_SL1500_.jpg", // Whiskas Peixe
-            "https://m.media-amazon.com/images/I/71Y0vI7eKHL._AC_SL1500_.jpg", // Whiskas Filhote
-            "https://m.media-amazon.com/images/I/61r-G-W-W5L._AC_SL1000_.jpg", // Pedigree
-            "https://m.media-amazon.com/images/I/81h89F82A4L._AC_SL1500_.jpg", // Royal Canin
-            "https://m.media-amazon.com/images/I/71lM6Xy-u1L._AC_SL1500_.jpg", // Golden
-            "https://m.media-amazon.com/images/I/61aWv697m5L._AC_SL1200_.jpg", // Sachê Whiskas
-            "https://m.media-amazon.com/images/I/81Wn6775f0L._AC_SL1500_.jpg"  // Purina Friskies
-        ];
+<h3 style="font-size:12px;margin-top:8px">${p.nome}</h3>
+<p style="color:#3b82f6;font-weight:bold">R$ ${p.preco}</p>
 
-        // GERAÇÃO AUTOMÁTICA DE 200 PRODUTOS
-        function generateData() {
-            const brands = ['Whiskas', 'Pedigree', 'Royal Canin', 'Golden', 'Purina', 'N&D', 'Premier', 'Biofresh'];
-            const types = ['Carne', 'Peixe', 'Frango', 'Castrados', 'Filhote', 'Sachê Gourmet', 'Cordeiro', 'Mix de Mares'];
-            
-            for(let i = 1; i <= 200; i++) {
-                const brand = brands[Math.floor(Math.random() * brands.length)];
-                const type = types[Math.floor(Math.random() * types.length)];
-                const price = (Math.random() * (250 - 5) + 5).toFixed(2);
-                const img = sampleImages[i % sampleImages.length];
-                
-                const product = {
-                    id: i,
-                    name: `${brand} ${type}`,
-                    brand: brand,
-                    price: price.replace('.', ','),
-                    img: img,
-                    desc: `Alimento completo para o bem estar do seu pet. Rico em vitaminas e minerais.`
-                };
+<div class="btn" onclick="add(event)">+ CARRINHO</div>
+</div>
+`;
+});
+}
 
-                // Distribui nos carrosséis
-                let target = "carousel-2";
-                if(i <= 20) target = "carousel-1";
-                if(i > 100) target = "carousel-3";
+// 🔥 ADD CARRINHO
+function add(e){
+e.stopPropagation();
+cart++;
+document.getElementById("count").innerText = cart;
+}
 
-                renderCard(product, target);
-            }
-        }
+// 🔥 DETALHES
+function detalhe(i){
+const p = produtos[i];
 
-        function renderCard(p, containerId) {
-            const div = document.createElement('div');
-            div.className = 'product-card p-3';
-            div.innerHTML = `
-                <div class="img-box" onclick="showProduct(${p.id}, '${p.name}', '${p.price}', '${p.img}', '${p.brand}')">
-                    <img src="${p.img}" onerror="this.src='https://via.placeholder.com/200?text=Pet+Shop'">
-                </div>
-                <div class="mt-3">
-                    <p class="text-[9px] text-blue-500 font-black uppercase">${p.brand}</p>
-                    <h3 class="text-[11px] font-bold truncate text-gray-300">${p.name}</h3>
-                    <p class="text-blue-400 font-black mt-1 text-sm">R$ ${p.price}</p>
-                    <button onclick="addCart(event)" class="w-full bg-blue-600/10 text-blue-400 text-[10px] py-2 mt-2 rounded-lg font-bold border border-blue-600/20 active:bg-blue-600 active:text-white transition-all">+ CARRINHO</button>
-                </div>
-            `;
-            document.getElementById(containerId).appendChild(div);
-        }
+document.body.innerHTML = `
+<div style="padding:20px">
 
-        function showProduct(id, name, price, img, brand) {
-            const content = document.getElementById('product-detail');
-            content.innerHTML = `
-                <div class="bg-white rounded-3xl p-6 mb-6">
-                    <img src="${img}" class="w-full h-56 object-contain">
-                </div>
-                <p class="text-blue-500 font-black text-xs uppercase mb-1">${brand}</p>
-                <h1 class="text-3xl font-black mb-2">${name}</h1>
-                <p class="text-4xl font-black text-blue-400 mb-8">R$ ${price}</p>
-                <div class="bg-[#161b22] p-5 rounded-2xl border border-gray-800 mb-8">
-                    <h4 class="text-[10px] text-gray-500 font-black mb-2">DESCRIÇÃO</h4>
-                    <p class="text-sm text-gray-400">Nutrição premium para seu pet. Contém ômega 3 e 6 para pelos brilhantes e saúde reforçada.</p>
-                </div>
-                <button onclick="addCart(event)" class="w-full bg-blue-600 py-5 rounded-2xl font-black text-lg shadow-xl shadow-blue-900/40 active:scale-95 transition-transform">ADICIONAR AO PEDIDO</button>
-            `;
-            navigate('details');
-        }
+<button onclick="location.reload()" style="margin-bottom:20px">⬅ VOLTAR</button>
 
-        function navigate(screen) {
-            document.querySelectorAll('section').forEach(s => s.classList.add('hidden'));
-            document.getElementById(screen + '-screen').classList.remove('hidden');
-            if(history[history.length -1] !== screen) history.push(screen);
-            window.scrollTo(0,0);
-        }
+<div style="background:#fff;border-radius:20px;padding:20px">
+<img src="${p.img}" style="width:100%">
+</div>
 
-        function goBack() {
-            if(history.length > 1) {
-                history.pop();
-                const target = history[history.length - 1];
-                document.querySelectorAll('section').forEach(s => s.classList.add('hidden'));
-                document.getElementById(target + '-screen').classList.remove('hidden');
-            }
-        }
+<h1 style="margin-top:20px">${p.nome}</h1>
+<h2 style="color:#3b82f6">R$ ${p.preco}</h2>
 
-        function addCart(e) {
-            e.stopPropagation();
-            cart++;
-            document.getElementById('cart-count').innerText = cart;
-            const cartBtn = document.getElementById('main-cart');
-            cartBtn.classList.add('scale-110');
-            setTimeout(() => cartBtn.classList.remove('scale-110'), 200);
-        }
+<div class="btn" onclick="add(event)">ADICIONAR AO CARRINHO</div>
 
-        // Inicia a geração dos 200 itens
-        generateData();
-    </script>
+</div>
+`;
+}
+
+carregar();
+
+</script>
+
 </body>
 </html>
