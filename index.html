@@ -1,115 +1,242 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Moisés Barbearia</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>PET SHOP VASCONCELOS</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap');
+        
+        html, body { background-color: #0f1115; color: white; font-family: 'Poppins', sans-serif; overflow-x: hidden; width: 100%; }
+        .hidden { display: none; }
+        
+        /* LOGO PET SHOP VASCONCELOS */
+        .logo-container { padding: 30px 20px; text-align: center; }
+        .logo-pet { 
+            font-size: 30px; font-weight: 800; text-transform: uppercase; 
+            color: #fff; text-shadow: 0 0 15px #3b82f6; letter-spacing: -1px;
+            line-height: 1;
+        }
+        .logo-sub {
+            display: block; font-size: 12px; background: linear-gradient(to right, #60a5fa, #3b82f6);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 700;
+            margin-top: 5px; letter-spacing: 5px; border-top: 1px solid #3b82f6; padding-top: 4px;
+        }
 
-<script src="https://cdn.tailwindcss.com"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+        /* CATEGORIAS */
+        .cat-btn { 
+            padding: 10px 20px; border-radius: 30px; font-size: 11px; font-weight: 600;
+            white-space: nowrap; transition: 0.3s; border: 1px solid #374151; background: #1f2937;
+            text-transform: uppercase;
+        }
+        .cat-btn.active { background: #3b82f6; border-color: #60a5fa; box-shadow: 0 0 10px rgba(59, 130, 246, 0.4); }
 
-<style>
-body{background:#0f1115;color:#fff;font-family:sans-serif}
-.hidden{display:none}
-</style>
+        /* PRODUTO CARD */
+        .product-card { background: #1f2937; border-radius: 20px; overflow: hidden; border: 1px solid #374151; transition: 0.3s; }
+        .product-card:active { transform: scale(0.95); }
+        .product-img { width: 100%; height: 160px; object-fit: cover; cursor: pointer; background: #fff; }
+
+        /* CARRINHO MODERNO */
+        .cart-float {
+            position: fixed; bottom: 25px; right: 20px; background: #3b82f6;
+            width: 65px; height: 65px; border-radius: 20px; display: flex;
+            align-items: center; justify-content: center; font-size: 26px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4); z-index: 100;
+            border: 2px solid rgba(255,255,255,0.1);
+        }
+
+        .input-style { background-color: #1f2937; border-radius: 12px; padding: 16px; width: 100%; outline: none; color: white; border: 1px solid #374151; }
+        
+        /* BOTÃO VOLTAR */
+        .back-btn { background: #3b82f6; padding: 10px 20px; border-radius: 12px; font-size: 13px; font-weight: bold; margin-bottom: 20px; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; }
+
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+    </style>
 </head>
-
 <body>
 
-<div id="app" class="max-w-md mx-auto min-h-screen p-5">
+    <div id="app" class="max-w-md mx-auto min-h-screen pb-28">
+        
+        <header class="logo-container">
+            <div class="logo-pet">VASCONCELOS<span class="logo-sub">PET SHOP</span></div>
+        </header>
 
-<h1 class="text-center text-2xl font-bold mb-4">MOISÉS BARBEARIA</h1>
+        <!-- TELA INICIAL (LOGIN) -->
+        <section id="login-screen" class="p-8">
+            <div class="flex mb-10 bg-gray-900 rounded-xl p-1">
+                <button class="flex-1 py-3 font-bold rounded-lg bg-blue-600 text-white shadow-lg">Login</button>
+                <button onclick="switchScreen('signup')" class="flex-1 py-3 font-bold text-gray-500">Cadastro</button>
+            </div>
+            <div class="space-y-4">
+                <input type="email" placeholder="E-mail do Pet" class="input-style">
+                <input type="password" placeholder="Senha" class="input-style">
+                <button onclick="goToStore()" class="w-full bg-blue-600 hover:bg-blue-500 text-white p-4 rounded-xl font-bold transition">ENTRAR NA LOJA</button>
+                <p class="text-center text-gray-500 text-xs">Esqueceu a senha?</p>
+            </div>
+        </section>
 
-<!-- SUA TELA ORIGINAL -->
-<div id="schedule-screen">
+        <!-- TELA CADASTRO -->
+        <section id="signup-screen" class="hidden p-8">
+            <button onclick="goBack()" class="mb-6 text-blue-400 font-bold">← VOLTAR</button>
+            <h2 class="text-2xl font-bold mb-6 text-center">Criar Conta</h2>
+            <div class="space-y-4">
+                <input type="text" placeholder="Nome do Dono" class="input-style">
+                <input type="text" placeholder="Nome do Pet" class="input-style">
+                <input type="email" placeholder="E-mail" class="input-style">
+                <input type="password" placeholder="Senha" class="input-style">
+                <button onclick="switchScreen('login')" class="w-full bg-white text-black p-4 rounded-xl font-bold">CADASTRAR</button>
+            </div>
+        </section>
 
-<button onclick="confirmAppointment()" class="w-full bg-yellow-600 p-4 rounded-xl font-bold">
-FINALIZAR AGENDAMENTO
-</button>
+        <!-- TELA DE CATÁLOGO -->
+        <section id="store-screen" class="hidden">
+            <!-- Menu de Categorias Deslizante -->
+            <div class="flex gap-2 overflow-x-auto px-4 pb-6 no-scrollbar" id="category-tabs"></div>
 
-</div>
+            <div class="px-4 grid grid-cols-2 gap-4" id="products-grid">
+                <!-- Produtos entram aqui -->
+            </div>
+        </section>
 
-<!-- TELA PIX (NOVA) -->
-<div id="payment-screen" class="hidden text-center">
+        <!-- TELA DE DETALHES -->
+        <section id="details-screen" class="hidden p-6">
+            <div onclick="goBack()" class="back-btn"><i class="fas fa-arrow-left"></i> VOLTAR</div>
+            <div id="product-info" class="animate-fade-in"></div>
+        </section>
 
-<h2 class="text-xl font-bold">Pagamento via PIX</h2>
+    </div>
 
-<div id="qrcode" style="margin:20px auto"></div>
+    <!-- CARRINHO FLUTUANTE -->
+    <div id="cart-icon" class="cart-float hidden" onclick="alert('Finalizar compra de ' + cart.length + ' itens?')">
+        <i class="fas fa-shopping-basket"></i>
+        <span id="cart-count" class="absolute -top-2 -right-2 bg-red-600 text-white text-[10px] w-6 h-6 rounded-full flex items-center justify-center font-bold border-2 border-gray-900">0</span>
+    </div>
 
-<div id="pix-code" style="background:#000;padding:10px;border-radius:10px;font-size:12px;word-break:break-all;margin-top:10px"></div>
+    <script>
+        let cart = [];
+        let historyStack = ['login'];
+        let currentCat = 'dog-adult';
 
-<button onclick="copyPix()" class="bg-yellow-600 mt-4 p-4 w-full rounded-xl font-bold">
-COPIAR PIX
-</button>
+        const produtos = [
+            // CÃO ADULTO
+            { id: 1, cat: 'dog-adult', nome: 'Royal Canin Medium', preco: '189,90', img: 'https://images.tcdn.com.br/img/img_prod/697931/racao_royal_canin_medium_adult_para_caes_adultos_de_porte_medio_1127_1_20201111161747.jpg', desc: 'Alimento completo para cães adultos de porte médio (peso entre 11 e 25 kg). Auxilia no suporte às defesas naturais.' },
+            { id: 2, cat: 'dog-adult', nome: 'Premier Raças Específicas', preco: '154,00', img: 'https://images.tcdn.com.br/img/img_prod/697931/racao_premier_pet_racas_especificas_shih_tzu_caes_adultos_477_1_20201111161642.jpg', desc: 'Formulada para atender as necessidades genéticas de raças específicas. Alta palatabilidade.' },
+            { id: 3, cat: 'dog-adult', nome: 'Golden Formula Frango', preco: '129,90', img: 'https://images.tcdn.com.br/img/img_prod/697931/racao_golden_formula_caes_adultos_frango_e_arroz_429_1_20201111161633.jpg', desc: 'Ração Premium especial sem corantes e aromatizantes artificiais.' },
+            
+            // CÃO FILHOTE
+            { id: 4, cat: 'dog-puppy', nome: 'Pedigree Filhote Carne', preco: '98,00', img: 'https://static.petz.com.br/fotos/1658425167571.jpg', desc: 'Com fibras naturais para uma digestão saudável e cálcio para dentes e ossos fortes.' },
+            { id: 5, cat: 'dog-puppy', nome: 'Purina Pro Plan Puppy', preco: '210,00', img: 'https://static.petz.com.br/fotos/1625856402804.jpg', desc: 'Tecnologia OptiStart, ajuda a fortalecer a proteção que o colostro materno oferece.' },
 
-<button onclick="finishPayment()" class="bg-green-600 mt-3 p-4 w-full rounded-xl font-bold">
-JÁ PAGUEI
-</button>
+            // GATO ADULTO
+            { id: 6, cat: 'cat-adult', nome: 'Whiskas Carne 10kg', preco: '145,00', img: 'https://static.petz.com.br/fotos/1660137785233.jpg', desc: 'Com prebióticos que ajudam na digestão saudável. Contém zinco para pelos brilhantes.' },
+            { id: 7, cat: 'cat-adult', nome: 'Royal Canin Castrados', preco: '198,00', img: 'https://static.petz.com.br/fotos/1573053896434.jpg', desc: 'Ajuda a limitar o ganho de peso excessivo após a castração. Teor de gordura moderado.' },
 
-</div>
+            // GATO FILHOTE
+            { id: 8, cat: 'cat-kitten', nome: 'Golden Gatos Filhotes', preco: '85,00', img: 'https://static.petz.com.br/fotos/1652796122978.jpg', desc: 'Ração rica em Taurina, essencial para o coração e visão dos gatinhos.' },
 
-</div>
+            // SACHÊS
+            { id: 9, cat: 'sachet', nome: 'Sachê Pedigree Carne', preco: '3,50', img: 'https://static.petz.com.br/fotos/1658428285901.jpg', desc: 'Pedaços de carne cozidos no vapor. Refeição 100% completa.' },
+            { id: 10, cat: 'sachet', nome: 'Sachê Whiskas Peixe', preco: '3,80', img: 'https://static.petz.com.br/fotos/1660742130325.jpg', desc: 'Delicioso molho com pedaços de peixe fresco para gatos exigentes.' },
+            { id: 11, cat: 'sachet', nome: 'Sachê Sheba Atum', preco: '5,50', img: 'https://static.petz.com.br/fotos/1614013446860.jpg', desc: 'Experiência gourmet para gatos de paladar refinado.' }
+        ];
 
-<script>
+        const categorias = [
+            { id: 'dog-adult', label: 'Cão Adulto' },
+            { id: 'dog-puppy', label: 'Cão Filhote' },
+            { id: 'cat-adult', label: 'Gato Adulto' },
+            { id: 'cat-kitten', label: 'Gato Filhote' },
+            { id: 'sachet', label: 'Sachês / Úmidos' }
+        ];
 
-// ===== SUA LÓGICA ORIGINAL SIMULADA =====
-let selectedService = "Corte"
-let selectedDate = "10/04"
-let selectedTime = "14:00"
+        function switchScreen(screen, save = true) {
+            document.querySelectorAll('section').forEach(s => s.classList.add('hidden'));
+            document.getElementById(screen + '-screen').classList.remove('hidden');
+            if(save && historyStack[historyStack.length-1] !== screen) historyStack.push(screen);
+            
+            // Mostra carrinho apenas na loja ou detalhes
+            document.getElementById('cart-icon').classList.toggle('hidden', screen === 'login' || screen === 'signup');
+            window.scrollTo(0,0);
+        }
 
-function confirmAppointmentOriginal(){
-alert(`✅ Agendado!
-Serviço: ${selectedService}
-Data: ${selectedDate}
-Hora: ${selectedTime}`);
-location.reload();
-}
+        function goBack() {
+            if(historyStack.length > 1) {
+                historyStack.pop();
+                switchScreen(historyStack[historyStack.length-1], false);
+            }
+        }
 
-// ===== NOVO SISTEMA SEM QUEBRAR =====
-function confirmAppointment(){
+        function goToStore() {
+            switchScreen('store');
+            renderTabs();
+            renderProducts();
+        }
 
-document.getElementById("schedule-screen").classList.add("hidden");
-document.getElementById("payment-screen").classList.remove("hidden");
+        function renderTabs() {
+            const container = document.getElementById('category-tabs');
+            container.innerHTML = categorias.map(c => `
+                <button onclick="setCat('${c.id}')" class="cat-btn ${currentCat === c.id ? 'active' : ''}">
+                    ${c.label}
+                </button>
+            `).join('');
+        }
 
-gerarPix();
+        function setCat(id) {
+            currentCat = id;
+            renderTabs();
+            renderProducts();
+        }
 
-}
+        function renderProducts() {
+            const grid = document.getElementById('products-grid');
+            const filtered = produtos.filter(p => p.cat === currentCat);
+            grid.innerHTML = filtered.map(p => `
+                <div class="product-card">
+                    <img src="${p.img}" class="product-img" onclick="showProduct(${p.id})">
+                    <div class="p-3">
+                        <h3 class="text-[11px] font-bold text-gray-300 truncate">${p.nome}</h3>
+                        <p class="text-blue-400 font-extrabold text-sm">R$ ${p.preco}</p>
+                        <button onclick="addCart(${p.id})" class="w-full bg-blue-600/20 text-blue-400 border border-blue-600/30 mt-2 py-2 rounded-lg text-[10px] font-bold uppercase">
+                            + Carrinho
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
 
-function gerarPix(){
+        function showProduct(id) {
+            const p = produtos.find(i => i.id === id);
+            const info = document.getElementById('product-info');
+            info.innerHTML = `
+                <div class="bg-white rounded-3xl p-4 mb-6">
+                    <img src="${p.img}" class="w-full h-64 object-contain">
+                </div>
+                <h1 class="text-2xl font-extrabold mb-1">${p.nome}</h1>
+                <p class="text-blue-500 text-2xl font-black mb-6">R$ ${p.preco}</p>
+                
+                <div class="bg-gray-800 p-5 rounded-2xl mb-8 border border-gray-700">
+                    <h4 class="text-gray-400 text-xs font-bold uppercase mb-2">Informações Nutricionais</h4>
+                    <p class="text-sm text-gray-300 leading-relaxed">${p.desc}</p>
+                </div>
 
-const pix = "00020126580014BR.GOV.BCB.PIX0136seu@email.com520400005303986540510.005802BR5920MOISES BARBEARIA6009SAO PAULO62070503***6304ABCD";
+                <button onclick="addCart(${p.id})" class="w-full bg-blue-600 p-5 rounded-2xl font-bold text-lg shadow-xl flex items-center justify-center gap-3">
+                    <i class="fas fa-cart-plus"></i> ADICIONAR AO PEDIDO
+                </button>
+            `;
+            switchScreen('details');
+        }
 
-document.getElementById("pix-code").innerText = pix;
-
-document.getElementById("qrcode").innerHTML = "";
-
-new QRCode(document.getElementById("qrcode"), {
-text: pix,
-width:200,
-height:200
-});
-
-}
-
-function copyPix(){
-navigator.clipboard.writeText(document.getElementById("pix-code").innerText);
-alert("PIX copiado!");
-}
-
-function finishPayment(){
-
-alert(`✅ PAGAMENTO CONFIRMADO!
-
-Serviço: ${selectedService}
-Data: ${selectedDate}
-Hora: ${selectedTime}`);
-
-// chama original
-confirmAppointmentOriginal();
-
-}
-
-</script>
-
+        function addCart(id) {
+            const p = produtos.find(i => i.id === id);
+            cart.push(p);
+            document.getElementById('cart-count').innerText = cart.length;
+            
+            // Feedback visual
+            const icon = document.getElementById('cart-icon');
+            icon.classList.add('scale-110');
+            setTimeout(() => icon.classList.remove('scale-110'), 200);
+        }
+    </script>
 </body>
 </html>
